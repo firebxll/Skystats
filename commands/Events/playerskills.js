@@ -1,13 +1,18 @@
 const Discord = require('discord.js');
-const fetch = require('node-fetch');
+const fetch = require('node-fetch')
 
-const loading = `842005585138155552`
+const lv60 = 111672425;
+const lv50 = 55172425;
+
+const loading = `819138970771652609`;
 
 module.exports = {
-    name: 'slayer',
-    aliases: ['slayers', 'maddox'],
-    usage: 'slayer [ign] [profile]',
-    description: "Gets player slayer information",
+    name: 'playerskills',
+    aliases: ['psk', 'playersk'],
+    usage: 'playerskills [player] [profile]',
+    tldr: 'Gets the maniacs skill exp of a player',
+    description: 'Gets the skill experience of a player using the maniacs method\nThis is all skill experience up to max level in Farming, Mining, Combat, Foraging and Fishing',
+    guildOnly: true,
     async execute(message, args) {
         if (!args[0]) {
             var ign = message.member.displayName;
@@ -42,7 +47,7 @@ module.exports = {
         // At this point we know its a valid IGN, but not if it has skyblock profiles
         const apiData = await getApiData(ign, method); // Gets all skyblock player data from Senither's Hypixel API Facade
 
-		if (apiData.status != 200) {
+        if (apiData.status != 200) {
 			return message.channel.send(
 				new Discord.MessageEmbed()
 					.setDescription(apiData.reason)
@@ -53,18 +58,20 @@ module.exports = {
 
         // IGN is valid and player has skyblock profiles
 
-        return message.channel.send( // EDIT THIS BIT
+        if (apiData.data.skills.apiEnabled == false) return message.channel.send(
             new Discord.MessageEmbed()
-            .setTitle(`Slayer Data for ${ign}`)
-            .setColor('7CFC00')
-            .setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `http://sky.shiiyu.moe/stats/${ign}`)
-            .setFooter(`${ign}'s Total Slayer EXP: ` + apiData.data.slayers.total_experience)
-            .addFields(
-                {name: "Revenant Horror", value: apiData.data.slayers.bosses.revenant.experience, inline: true},
-                {name: "Tarantula Broodfather", value: apiData.data.slayers.bosses.tarantula.experience, inline: true},
-                {name: "Sven Packmaster", value: apiData.data.slayers.bosses.sven.experience, inline: true},
-            )
-            .setTimestamp()
+                .setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `https://sky.shiiyu.moe/stats/${ign}`)
+                .setDescription('You currently have skills API disabled, please enable it in the skyblock menu and try again')
+                .setColor('DC143C')
+                .setTimestamp()
+        ).then(message.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error)))
+
+        return message.channel.send(
+            new Discord.MessageEmbed()
+                .setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `https://sky.shiiyu.moe/stats/${ign}`)
+                .setDescription(`Calculated skill exp: \`${calcSkills(apiData).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}\``)
+                .setColor('7CFC00')
+                .setTimestamp()
         ).then(message.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error)))
     },
 };
@@ -90,7 +97,47 @@ async function getTrueIgn(ign) {
     return result.name;
 }
 
-function toFixed(num) {
-    var re = new RegExp('^-?\\d+(?:\.\\d{0,' + (2 || -1) + '})?');
-    return num.toString().match(re)[0];
+function calcSkills(apiData) { // mining, foraging, farming, combat, fishing, taming
+    if (apiData.data.skills.apiEnabled != true) {
+        return '-';
+    }
+
+    var exp = 0;
+
+    try {
+        if (apiData.data.skills.mining.experience >= lv60) exp += lv60;
+        else exp += apiData.data.skills.mining.experience
+    } catch {
+        exp += 0;
+    }
+
+    try {
+        if (apiData.data.skills.foraging.experience >= lv50) exp += lv50;
+        else exp += apiData.data.skills.foraging.experience
+    } catch {
+        exp += 0;
+    }
+
+    try {
+        if (apiData.data.skills.farming.experience >= lv60) exp += lv60;
+        else exp += apiData.data.skills.farming.experience
+    } catch {
+        exp += 0;
+    }
+
+    try {
+        if (apiData.data.skills.combat.experience >= lv60) exp += lv60;
+        else exp += apiData.data.skills.combat.experience
+    } catch {
+        exp += 0;
+    }
+
+    try {
+        if (apiData.data.skills.fishing.experience >= lv50) exp += lv50;
+        else exp += apiData.data.skills.fishing.experience
+    } catch {
+        exp += 0;
+    }
+
+    return Math.floor(exp);
 }

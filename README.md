@@ -1,6 +1,6 @@
 # SkyStats
 
-> A discord.js bot written for [Skyblock Maniacs](https://discord.gg/maniacs) to get key metrics of a player in Hypixel Skyblock.
+> A discord.js bot written for [Skyblock Maniacs - Guilds](https://discord.gg/A9Rjun5bv8) to get key metrics of a player in Hypixel Skyblock.
 
 ### Table of Content
 
@@ -22,7 +22,7 @@
 
 Firstly clone the repository using:
 ```
-git clone https://github.com/itsneyoa/skystats.git
+git clone https://github.com/firebxll/skystats.git
 ```
 Then go into the `SkyStats` folder:
 ```
@@ -39,6 +39,8 @@ cp config.example.json config.json
 Configure the config file with all the details:
 ```
 nano config.json
+```
+Be sure to insert the verified role id in verify.js
 ```
 Finally you can run the program:
 ```
@@ -64,18 +66,9 @@ node index.js
 
 ### Roadmap
 
-- [ ] Setup MongoDB for unique stuff in every guild:
-    - Prefix
-    - Rank requirements
-    - Guild requirements
-- [ ] Add the rest of the metrics for `player`
-    - This requires the normal Hypixel API instead of the facade
+
 - [ ] Add verification / name updating
-    - Likewise, this requires the normal Hypixel API instead of the facade
-- [ ] Add metrics other than `player`
-    - Skills
-    - Dungeons
-    - Slayer
+    - This requires the normal Hypixel API instead of the facade
 - [ ] Add rep system
     - Gives new roles at certain 'rep' milestones
     - Adds suffix to name based on rep score (maybe)

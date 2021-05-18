@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
 
-const loading = `819138970771652609`
+const loading = `842005585138155552`
 
 module.exports = {
     name: 'weight',

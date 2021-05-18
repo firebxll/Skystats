@@ -10,47 +10,27 @@
     },
     "requirements": {
         "roles": {
-            "dungeons": {
-                "f4": 25,
-                "f5": 28,
-                "f6": 32,
-                "f7": 36
-            },
-            "skills": {
-                "taming": 50,
-                "alchemy": 50
+            "ps" : {
+                "dungeons": {
+                    "f4": 25,
+                    "f5": 28,
+                    "f6": 32,
+                    "f7": 36 
+                }
             }
         },
         "guild": {
-            "terminal": {
-                "weight": 5000,
+            "sbm": {
+                "weight": 4000,
                 "ranks": {
-                    "vape": {
-                        "skill": 48,
-                        "catacombs": 38
+                    "dungeons": {
+                        "catacombs": 35
                     },
-                    "f11": {
-                        "skill": 48
-                    },
-                    "hael9": {
-                        "catacombs": 38
-                    }
-                }
-            },
-            "eternal": {
-                "weight": 3000,
-                "ranks": {
-                    "dungeoneer": {
-                        "catacombs": 33
-                    },
-                    "skillgrinder": {
-                        "skill": 43.5
-                    },
-                    "slayermaniacs": {
-                        "slayer": 1500000
+                    "skills": {
+                        "skill": 44
                     }
                 }
             }
         }
-    }
+     }
 }

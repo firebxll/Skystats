@@ -1,8 +1,8 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 
-const yes = `819295941621841970`;
-const no = `819295822230716467`;
+const yes = `842005525414805544`;
+const no = `842005545963487242`;
 
 module.exports = {
     name: 'help',
@@ -23,7 +23,7 @@ module.exports = {
                 .setAuthor(`Help - ${message.client.user.username}`, message.client.user.avatarURL())
                 .setDescription(`For more information run \`help [command]\``)
                 .setColor(message.guild.me.displayHexColor)
-                .setFooter('Made by neyoa ❤')
+                .setFooter('Made by fire ❤')
                 .setTimestamp();
 
             var commandsNum = 0;
@@ -94,7 +94,7 @@ module.exports = {
         let embed = new Discord.MessageEmbed()
             .setAuthor(`Help - ${command.name.charAt(0).toUpperCase() + command.name.slice(1)}`, message.client.user.avatarURL())
             .setColor(message.guild.me.displayHexColor)
-            .setFooter('Made by neyoa ❤')
+            .setFooter('Made by fire ❤')
             .setTimestamp();
 
         var desc = [`*${command.description}*`, `Usage: \`${command.usage}\``];

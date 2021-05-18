@@ -1,11 +1,11 @@
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
 
-const loading = `819138970771652609`
+const loading = `842005585138155552`
 
 module.exports = {
     name: 'dungeons',
-    aliases: ['cata', 'catacombs', 'dungeon'],
+    aliases: ['cata', 'catacombs', 'dungeon', 'd'],
     usage: 'dungeons [ign] [profile]',
     description: "Gets players dungeons information",
     async execute(message, args) {
@@ -50,16 +50,38 @@ module.exports = {
                     .setTimestamp()
             ).then(message.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error)))
         }
-
+        if (apiData.data.dungeons.types.catacombs.fastest_time.tier_7.time == null) {
+			return message.channel.send(
+				new MessageEmbed()
+					.setDescription(`\`${ign}\` hasn't completed Floor 7`)
+					.setColor('DC143C')
+			)
+        }
         // IGN is valid and player has skyblock profiles
 
         return message.channel.send( // EDIT THIS BIT
-            new Discord.MessageEmbed()
-                .setDescription(`Hi, this command is still being worked on at the moment!`)
-                .setColor('FF8C00')
+            new Discord.MessageEmbed()  
+                .setTitle(`Dungeons Stats for ${ign}`)
+                .setColor('7CFC00')
+                .setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `http://sky.shiiyu.moe/stats/${ign}`)
+                .setFooter(`Your Dungeons Weight: ${toFixed(apiData.data.dungeons.weight + apiData.data.dungeons.weight_overflow)}`)
+                .addFields(
+                    {name: "Catacombs Level", value: toFixed(apiData.data.dungeons.types.catacombs.level), inline: true},
+                    {name: "Secret Count", value: toFixed(apiData.data.dungeons.secrets_found), inline: true},
+                    {name: "Floor 7 PB", value: getPersonalBest(apiData), inline: true},
+                )
+                .setTimestamp()
         ).then(message.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error)))
     },
 };
+
+function getPersonalBest(apiData) {
+    const f7 = apiData.data.dungeons.types.catacombs.fastest_time.tier_7.time
+
+    return[
+        `Floor 7: ${f7}`,
+    ].join('\n');
+}
 
 async function getUUID(ign) {
     const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${ign}`);

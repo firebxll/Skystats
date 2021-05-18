@@ -68,7 +68,7 @@ module.exports = {
         if ((message.guild.id != config.discord.mainServer) && command.maniacsOnly) {
             return message.channel.send(
                 new Discord.MessageEmbed()
-                    .setDescription(`Sorry, this command is only available in [Skyblock Maniacs](https://discord.gg/maniacs) Discord.`)
+                    .setDescription(`Sorry, this command is only available in [Skyblock Maniacs Guild Server](https://discord.gg/sbm) Discord.`)
                     .setColor('DC143C')
             )
         }

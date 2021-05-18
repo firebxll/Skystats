@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
 
-const loading = `819138970771652609`
+const loading = `842005585138155552`
 
 module.exports = {
     name: 'skills',
@@ -63,9 +63,22 @@ module.exports = {
 
         return message.channel.send( // EDIT THIS BIT
             new Discord.MessageEmbed()
-                .setDescription(`Hi, this command is still being worked on at the moment!`)
-                .setColor('FF8C00')
-        ).then(message.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error)))
+                .setTitle(`Skill Data for ${ign}`)
+                .setColor('7CFC00')
+                .setAuthor(ign, `https://cravatar.eu/helmavatar/${ign}/600.png`, `http://sky.shiiyu.moe/stats/${ign}`)
+                .setFooter(`${ign}'s Skill Average: ${toFixed(apiData.data.skills.average_skills)}`)
+                .addFields(
+                    {name: "Mining", value: `${toFixed(apiData.data.skills.mining.level)}`, inline: true},
+                    {name: "Foraging", value: `${toFixed(apiData.data.skills.foraging.level)}`, inline: true},
+                    {name: "Enchanting", value: `${toFixed(apiData.data.skills.enchanting.level)}`, inline: true},
+                    {name: "Farming", value: `${toFixed(apiData.data.skills.farming.level)}`, inline: true},
+                    {name: "Combat", value: `${toFixed(apiData.data.skills.combat.level)}`, inline: true},
+                    {name: "Fishing", value: `${toFixed(apiData.data.skills.fishing.level)}`, inline: true},
+                    {name: "Alchemy", value: `${toFixed(apiData.data.skills.alchemy.level)}`, inline: true},
+                    {name: "Taming", value: `${toFixed(apiData.data.skills.taming.level)}`, inline: true}
+                )
+                .setTimestamp()
+        )
     },
 };
 

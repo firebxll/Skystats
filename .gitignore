@@ -1,5 +1,2 @@
-node_modules/
-.vscode/
-config.json
-ecosystem.config.js
-output.csv
+/config.json
+/node_modules

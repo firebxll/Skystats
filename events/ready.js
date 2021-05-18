@@ -12,7 +12,13 @@ module.exports = {
 				.setDescription('Logged in to discord!')
 				.setColor('7CFC00')
 				.setTimestamp()
+
+			
 		)
+		client.user.setActivity("LoC_Live", {
+			type: "STREAMING",
+			url: "-invite to invite the bot!"
+		  });
 	},
 };
 
