@@ -40,8 +40,6 @@ Configure the config file with all the details:
 ```
 nano config.json
 ```
-Be sure to insert the verified role id in verify.js
-```
 Finally you can run the program:
 ```
 node index.js
@@ -62,6 +60,7 @@ node index.js
 - `Requirements` contains the levels required for any requirements you want to check
     - `Dungeons` catacombs level for carrier roles
     - `Skills` respective skill level required for skill based roles
+- Be sure to add the verified role in verify.js
 
 
 ### Roadmap
